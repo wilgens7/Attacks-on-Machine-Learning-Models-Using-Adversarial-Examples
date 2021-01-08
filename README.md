@@ -93,21 +93,21 @@ We start by importing our dataset through the tensorflow.keras.datasets api. Whe
         For better evaluation of our attack, we also import the word dictionary provided by the IMDB dataset, which is a python dictionary in the form of word: index, for each key and value pair. Since the dataset is provided as sequences of indexes, we invert the dictionary to index:word format for easy look-up using the indexes. This gives us a way to, not only show sentence representation of a sequence, but also which words are substituted in each sentence as adversarial examples are being created. 
         
 2. Model
-For our model we use the suggested model mentioned in [2] as a foundation. However, we use a dense layer as our last layer instead of the softmax layer and we remove the average pooling layer. Our model performed described in [2] so we felt no need to alter our architecture any further. We compile our model using binary-cross-entropy as the loss function, Adam as the optimizer and accuracy as the metric. 
+For our model we use the suggested model mentioned in the paper as a foundation. However, we use a dense layer as our last layer instead of the softmax layer and we remove the average pooling layer. Our model performed described in the paper so we felt no need to alter our architecture any further. We compile our model using binary-cross-entropy as the loss function, Adam as the optimizer and accuracy as the metric. 
 
 
   
 
 
 
-We only use three epochs to train our model as it reaches the performance described in [2] by the second epoch. 
+We only use three epochs to train our model as it reaches the performance described in the paper by the second epoch. 
 
 
 3. Attack Creation
 As a first step to implementing the attack, we create a function, jacobian_for, that  takes as parameter an example and, using tensorflow’s GradientTape api, calculates the jacobian of the output of the model with respect to the input. We also create a convenient function that turns labels into ones or zeros. This is an important step as the model yields a probability value, which can become problematic when using a while loop that is conditioned on the model’s prediction on the adversarial examples being different from the original example. If this step is skipped, it would be the case that an adversarial example is successfully created but the loop would not stop executing.
 
 
-After the above steps are complete, we create the function that actually creates the attack. The function takes as parameter, as described by [2], a model f, an example x, and a dictionary D. We also include an extra parameter max_iter, which determines how many times we want the while loop to iterate successfully creating an adversarial example. Following the algorithm described by [2] and shown below, we implement the attack. 
+After the above steps are complete, we create the function that actually creates the attack. The function takes as parameter, as described by the paper, a model f, an example x, and a dictionary D. We also include an extra parameter max_iter, which determines how many times we want the while loop to iterate successfully creating an adversarial example. Following the algorithm described by the paper and shown below, we implement the attack. 
   
 
 
