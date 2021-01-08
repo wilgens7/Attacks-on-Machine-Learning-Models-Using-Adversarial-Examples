@@ -89,18 +89,10 @@ In this section we show that adversarial examples are not limited to image data.
 1. Data
 We start by importing our dataset through the tensorflow.keras.datasets api. When the data is loaded, it returns two tuples which comes in the form (training examples, training label) and (testing examples, testing label). Because our model is expecting a fixed number of features and given that each review is a sequence of words(features), we set our maximum limit for reviews to 80 words and we pad the sequences to make sure that they are all the same length. We then use Scikit-Learn’s train_test_split function to get a balanced subset of our dataset, containing 2000 training examples and 100 testing examples. 
 
-
-        For better evaluation of our attack, we also import the word dictionary provided by the IMDB dataset, which is a python dictionary in the form of word: index, for each key and value pair. Since the dataset is provided as sequences of indexes, we invert the dictionary to index:word format for easy look-up using the indexes. This gives us a way to, not only show sentence representation of a sequence, but also which words are substituted in each sentence as adversarial examples are being created. 
+For better evaluation of our attack, we also import the word dictionary provided by the IMDB dataset, which is a python dictionary in the form of word: index, for each key and value pair. Since the dataset is provided as sequences of indexes, we invert the dictionary to index:word format for easy look-up using the indexes. This gives us a way to, not only show sentence representation of a sequence, but also which words are substituted in each sentence as adversarial examples are being created. 
         
 2. Model
-For our model we use the suggested model mentioned in the paper as a foundation. However, we use a dense layer as our last layer instead of the softmax layer and we remove the average pooling layer. Our model performed described in the paper so we felt no need to alter our architecture any further. We compile our model using binary-cross-entropy as the loss function, Adam as the optimizer and accuracy as the metric. 
-
-
-  
-
-
-
-We only use three epochs to train our model as it reaches the performance described in the paper by the second epoch. 
+For our model we use the suggested model mentioned in the paper as a foundation. However, we use a dense layer as our last layer instead of the softmax layer and we remove the average pooling layer. Our model performed described in the paper so we felt no need to alter our architecture any further. We compile our model using binary-cross-entropy as the loss function, Adam as the optimizer and accuracy as the metric. We only use three epochs to train our model as it reaches the performance described in the paper by the second epoch. 
 
 
 3. Attack Creation
